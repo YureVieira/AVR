@@ -8,18 +8,14 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include "USI_TWI_Master.h"
 #include "usiTwiSlave.h"
 
-int main(void)
-{
-	while(1)
-	{
-		//TODO:: Please write your application code
-	}
-}
 class i2c
 {
+	private:
+	uint8_t buffer;
 	
 	public:	
 	uint8_t messageBuf[4];
@@ -30,11 +26,14 @@ class i2c
 	uint8_t requestFrom(uint8_t slave_address,uint8_t data);
 	uint8_t write(uint8_t slave_address,uint8_t data);
 	void available();
-	
-	private:
-	uint8_t buffer;
 };
-
+/*******************************************************************************************************************************************************************
+	Inicializa o hardware.
+*******************************************************************************************************************************************************************/
+void i2c::begin(){
+	USI_TWI_Master_Initialise();
+	sei();
+}
 /*******************************************************************************************************************************************************************
 	Inicializa o hardware.
 *******************************************************************************************************************************************************************/
@@ -67,4 +66,19 @@ uint8_t i2c::requestFrom(uint8_t slave_address){
 	messageBuf[0] = (slave_address<<TWI_ADR_BITS) | (FALSE<<TWI_READ_BIT); // The first byte must always consit of General Call code or the TWI slave address.
 	buffer = USI_TWI_Start_Transceiver_With_Data( messageBuf, 1);
 	return buffer;
+}
+
+
+int main(void)
+{
+	i2c master;
+	master.begin();
+	uint8_t num=0;
+	while(1)
+	{		
+		master.write(0x0A,num);
+		_delay_ms(1000);
+		num++;
+		//TODO:: Please write your application code
+	}
 }
