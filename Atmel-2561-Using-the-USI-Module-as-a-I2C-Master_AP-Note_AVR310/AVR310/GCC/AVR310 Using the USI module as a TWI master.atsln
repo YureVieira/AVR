@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "AVR310 Using the USI module as a TWI master", "AVR310 Using the USI module as a TWI master\AVR310 Using the USI module as a TWI master.cproj", "{1C366C52-2C2A-411E-A4E5-870546F1FDEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C366C52-2C2A-411E-A4E5-870546F1FDEC}.Debug|AVR.ActiveCfg = Debug|AVR
+		{1C366C52-2C2A-411E-A4E5-870546F1FDEC}.Debug|AVR.Build.0 = Debug|AVR
+		{1C366C52-2C2A-411E-A4E5-870546F1FDEC}.Release|AVR.ActiveCfg = Release|AVR
+		{1C366C52-2C2A-411E-A4E5-870546F1FDEC}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
