@@ -4,3 +4,7 @@
 
 i2c85.cpp
 
+usiTwiSlave.c
+
+USI_TWI_Master.c
+

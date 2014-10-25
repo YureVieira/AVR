@@ -193,7 +193,8 @@ unsigned char USI_TWI_Start_Transceiver_With_Data( unsigned char *msg, unsigned 
       }
       USI_TWI_Master_Transfer( tempUSISR_1bit );   // Generate ACK/NACK.
     }
-  }while( --msgSize) ;                             // Until all data sent/received.
+  }
+  while( --msgSize) ;                             // Until all data sent/received.
   
   USI_TWI_Master_Stop();                           // Send a STOP condition on the TWI bus.
 
@@ -221,7 +222,8 @@ unsigned char USI_TWI_Master_Transfer( unsigned char temp )
     while( !(PIN_USI & (1<<PIN_USI_SCL)) );// Wait for SCL to go high.
     _delay_us( T4_TWI/4 );              
     USICR = temp;                          // Generate negative SCL edge.
-  }while( !(USISR & (1<<USIOIF)) );        // Check for transfer complete.
+  }
+  while( !(USISR & (1<<USIOIF)) );        // Check for transfer complete.
   
   _delay_us( T2_TWI/4 );                
   temp  = USIDR;                           // Read out data.
@@ -230,6 +232,7 @@ unsigned char USI_TWI_Master_Transfer( unsigned char temp )
 
   return temp;                             // Return the data from the USIDR
 }
+
 
 /*---------------------------------------------------------------
  Function for generating a TWI Stop Condition. Used to release 

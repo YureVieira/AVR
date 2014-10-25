@@ -1,6 +1,7 @@
-﻿#include "USI_TWI_Master.h"
+﻿#include <avr/interrupt.h>
+#include "USI_TWI_Master.h"
 #include "usiTwiSlave.h"
-#include "i2c_USI"
+#include "i2c_USI.h"
 
 /*******************************************************************************************************************************************************************
 	Inicializa o hardware.
