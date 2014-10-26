@@ -81,16 +81,10 @@
     <Compile Include="i2c85.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="usiTwiSlave.c">
+    <Compile Include="Wire.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="usiTwiSlave.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="USI_TWI_Master.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="USI_TWI_Master.h">
+    <Compile Include="Wire.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
