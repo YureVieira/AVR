@@ -16,17 +16,16 @@ class SPI
 	uint8_t pinMISO;
 	uint8_t pinMOSI;
 	uint8_t pinSCLK;
-	uint8_t pinSS;
 	
 	public:
-	void config(uint8_t miso,uint8_t mosi,uint8_t sclk,uint8_t ss);
+	void config(uint8_t miso,uint8_t mosi,uint8_t sclk);
 	uint8_t shift(uint8_t data);
 };
 
 int main(void)
 {
 	SPI device;
-	device.config(0,1,2,3);
+	device.config(0,1,2);
 	DDRB |= 1<<4;
 	uint8_t aux=0;
     while(1)
@@ -39,12 +38,11 @@ int main(void)
     }
 }
 /***********************************************************************************************************************************************/
-void SPI::config(uint8_t miso,uint8_t mosi,uint8_t sclk,uint8_t ss){
+void SPI::config(uint8_t miso,uint8_t mosi,uint8_t sclk){
 	pinMISO = miso;
 	pinMOSI = mosi;
 	pinSCLK = sclk;
-	pinSS = ss;
-	DDRB |= (1<<pinMOSI)|(1<<pinSCLK)|(1<<pinSS);
+	DDRB |= (1<<pinMOSI)|(1<<pinSCLK);
 	DDRB &= ~(1<<pinMISO);
 }
 /***********************************************************************************************************************************************/
@@ -52,7 +50,6 @@ uint8_t SPI::shift(uint8_t data){
 	uint8_t buffer;
 	//buffer = data;
 	buffer = data;	
-	PORTB |= 1<<pinSS;
 	for(uint8_t i=0;i<=8;i++)
 	{		
 		PORTB |= 1<<pinSCLK;//Coloca a linha de clock em nivel alto.	
@@ -62,9 +59,7 @@ uint8_t SPI::shift(uint8_t data){
 		_delay_ms(100);
 		PORTB &=~(1<<pinSCLK);//Coloca a linha de clock em nivel baixo.
 		_delay_ms(100);		
-	}
-	PORTB ^= 1<<pinSS;
-	
+	}	
 	return buffer;
 }
 /***********************************************************************************************************************************************/
