@@ -3,19 +3,19 @@ SPI85.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000001de  00000000  00000000  00000054  2**1
+  0 .text         000001e2  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .stab         000006cc  00000000  00000000  00000234  2**2
+  1 .stab         000006cc  00000000  00000000  00000238  2**2
                   CONTENTS, READONLY, DEBUGGING
-  2 .stabstr      00000085  00000000  00000000  00000900  2**0
+  2 .stabstr      00000085  00000000  00000000  00000904  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_aranges 00000060  00000000  00000000  00000988  2**3
+  3 .debug_aranges 00000060  00000000  00000000  00000990  2**3
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   0000029a  00000000  00000000  000009e8  2**0
+  4 .debug_info   0000029a  00000000  00000000  000009f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 0000003c  00000000  00000000  00000c82  2**0
+  5 .debug_abbrev 0000003c  00000000  00000000  00000c8a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   000001a7  00000000  00000000  00000cbe  2**0
+  6 .debug_line   000001a7  00000000  00000000  00000cc6  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -49,7 +49,7 @@ Disassembly of section .text:
   2a:	10 e0       	ldi	r17, 0x00	; 0
   2c:	a0 e6       	ldi	r26, 0x60	; 96
   2e:	b0 e0       	ldi	r27, 0x00	; 0
-  30:	ee ed       	ldi	r30, 0xDE	; 222
+  30:	e2 ee       	ldi	r30, 0xE2	; 226
   32:	f1 e0       	ldi	r31, 0x01	; 1
   34:	02 c0       	rjmp	.+4      	; 0x3a <__CCP__+0x6>
   36:	05 90       	lpm	r0, Z+
@@ -72,7 +72,7 @@ Disassembly of section .text:
   4c:	b1 07       	cpc	r27, r17
   4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
   50:	9f d0       	rcall	.+318    	; 0x190 <main>
-  52:	c3 c0       	rjmp	.+390    	; 0x1da <_exit>
+  52:	c5 c0       	rjmp	.+394    	; 0x1de <_exit>
 
 00000054 <__bad_interrupt>:
   54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
@@ -125,117 +125,117 @@ Disassembly of section .text:
   ae:	08 95       	ret
 
 000000b0 <_ZN3SPI5shiftEh>:
-  b0:	cf 93       	push	r28
-  b2:	fc 01       	movw	r30, r24
-  b4:	98 b3       	in	r25, 0x18	; 24
-  b6:	21 e0       	ldi	r18, 0x01	; 1
-  b8:	30 e0       	ldi	r19, 0x00	; 0
-  ba:	03 80       	ldd	r0, Z+3	; 0x03
-  bc:	02 c0       	rjmp	.+4      	; 0xc2 <_ZN3SPI5shiftEh+0x12>
-  be:	22 0f       	add	r18, r18
-  c0:	33 1f       	adc	r19, r19
-  c2:	0a 94       	dec	r0
-  c4:	e2 f7       	brpl	.-8      	; 0xbe <_ZN3SPI5shiftEh+0xe>
-  c6:	92 2b       	or	r25, r18
-  c8:	98 bb       	out	0x18, r25	; 24
-  ca:	86 2f       	mov	r24, r22
+  b0:	fc 01       	movw	r30, r24
+  b2:	98 b3       	in	r25, 0x18	; 24
+  b4:	21 e0       	ldi	r18, 0x01	; 1
+  b6:	30 e0       	ldi	r19, 0x00	; 0
+  b8:	03 80       	ldd	r0, Z+3	; 0x03
+  ba:	02 c0       	rjmp	.+4      	; 0xc0 <_ZN3SPI5shiftEh+0x10>
+  bc:	22 0f       	add	r18, r18
+  be:	33 1f       	adc	r19, r19
+  c0:	0a 94       	dec	r0
+  c2:	e2 f7       	brpl	.-8      	; 0xbc <_ZN3SPI5shiftEh+0xc>
+  c4:	92 2b       	or	r25, r18
+  c6:	98 bb       	out	0x18, r25	; 24
+  c8:	86 2f       	mov	r24, r22
+  ca:	79 e0       	ldi	r23, 0x09	; 9
   cc:	21 e0       	ldi	r18, 0x01	; 1
   ce:	30 e0       	ldi	r19, 0x00	; 0
-  d0:	5a c0       	rjmp	.+180    	; 0x186 <_ZN3SPI5shiftEh+0xd6>
-  d2:	98 b3       	in	r25, 0x18	; 24
-  d4:	a9 01       	movw	r20, r18
-  d6:	02 80       	ldd	r0, Z+2	; 0x02
-  d8:	02 c0       	rjmp	.+4      	; 0xde <_ZN3SPI5shiftEh+0x2e>
-  da:	44 0f       	add	r20, r20
-  dc:	55 1f       	adc	r21, r21
-  de:	0a 94       	dec	r0
-  e0:	e2 f7       	brpl	.-8      	; 0xda <_ZN3SPI5shiftEh+0x2a>
-  e2:	94 2b       	or	r25, r20
-  e4:	98 bb       	out	0x18, r25	; 24
-  e6:	41 81       	ldd	r20, Z+1	; 0x01
-  e8:	98 b3       	in	r25, 0x18	; 24
-  ea:	87 ff       	sbrs	r24, 7
-  ec:	09 c0       	rjmp	.+18     	; 0x100 <_ZN3SPI5shiftEh+0x50>
-  ee:	b9 01       	movw	r22, r18
-  f0:	02 c0       	rjmp	.+4      	; 0xf6 <_ZN3SPI5shiftEh+0x46>
-  f2:	66 0f       	add	r22, r22
-  f4:	77 1f       	adc	r23, r23
-  f6:	4a 95       	dec	r20
-  f8:	e2 f7       	brpl	.-8      	; 0xf2 <_ZN3SPI5shiftEh+0x42>
-  fa:	96 2b       	or	r25, r22
+  d0:	98 b3       	in	r25, 0x18	; 24
+  d2:	a9 01       	movw	r20, r18
+  d4:	02 80       	ldd	r0, Z+2	; 0x02
+  d6:	02 c0       	rjmp	.+4      	; 0xdc <_ZN3SPI5shiftEh+0x2c>
+  d8:	44 0f       	add	r20, r20
+  da:	55 1f       	adc	r21, r21
+  dc:	0a 94       	dec	r0
+  de:	e2 f7       	brpl	.-8      	; 0xd8 <_ZN3SPI5shiftEh+0x28>
+  e0:	94 2b       	or	r25, r20
+  e2:	98 bb       	out	0x18, r25	; 24
+  e4:	41 81       	ldd	r20, Z+1	; 0x01
+  e6:	98 b3       	in	r25, 0x18	; 24
+  e8:	d9 01       	movw	r26, r18
+  ea:	02 c0       	rjmp	.+4      	; 0xf0 <_ZN3SPI5shiftEh+0x40>
+  ec:	aa 0f       	add	r26, r26
+  ee:	bb 1f       	adc	r27, r27
+  f0:	4a 95       	dec	r20
+  f2:	e2 f7       	brpl	.-8      	; 0xec <_ZN3SPI5shiftEh+0x3c>
+  f4:	ad 01       	movw	r20, r26
+  f6:	87 ff       	sbrs	r24, 7
+  f8:	03 c0       	rjmp	.+6      	; 0x100 <_ZN3SPI5shiftEh+0x50>
+  fa:	9a 2b       	or	r25, r26
   fc:	98 bb       	out	0x18, r25	; 24
-  fe:	0a c0       	rjmp	.+20     	; 0x114 <_ZN3SPI5shiftEh+0x64>
- 100:	d9 01       	movw	r26, r18
- 102:	02 c0       	rjmp	.+4      	; 0x108 <_ZN3SPI5shiftEh+0x58>
- 104:	aa 0f       	add	r26, r26
- 106:	bb 1f       	adc	r27, r27
- 108:	4a 95       	dec	r20
- 10a:	e2 f7       	brpl	.-8      	; 0x104 <_ZN3SPI5shiftEh+0x54>
- 10c:	ad 01       	movw	r20, r26
- 10e:	40 95       	com	r20
- 110:	49 23       	and	r20, r25
- 112:	48 bb       	out	0x18, r20	; 24
- 114:	46 b3       	in	r20, 0x16	; 22
- 116:	90 81       	ld	r25, Z
- 118:	50 e0       	ldi	r21, 0x00	; 0
- 11a:	09 2e       	mov	r0, r25
- 11c:	02 c0       	rjmp	.+4      	; 0x122 <_ZN3SPI5shiftEh+0x72>
- 11e:	55 95       	asr	r21
- 120:	47 95       	ror	r20
- 122:	0a 94       	dec	r0
- 124:	e2 f7       	brpl	.-8      	; 0x11e <_ZN3SPI5shiftEh+0x6e>
- 126:	40 ff       	sbrs	r20, 0
- 128:	08 c0       	rjmp	.+16     	; 0x13a <_ZN3SPI5shiftEh+0x8a>
- 12a:	a9 01       	movw	r20, r18
- 12c:	02 c0       	rjmp	.+4      	; 0x132 <_ZN3SPI5shiftEh+0x82>
- 12e:	44 0f       	add	r20, r20
- 130:	55 1f       	adc	r21, r21
- 132:	9a 95       	dec	r25
- 134:	e2 f7       	brpl	.-8      	; 0x12e <_ZN3SPI5shiftEh+0x7e>
- 136:	84 2b       	or	r24, r20
- 138:	08 c0       	rjmp	.+16     	; 0x14a <_ZN3SPI5shiftEh+0x9a>
- 13a:	a9 01       	movw	r20, r18
- 13c:	02 c0       	rjmp	.+4      	; 0x142 <_ZN3SPI5shiftEh+0x92>
- 13e:	44 0f       	add	r20, r20
- 140:	55 1f       	adc	r21, r21
- 142:	9a 95       	dec	r25
- 144:	e2 f7       	brpl	.-8      	; 0x13e <_ZN3SPI5shiftEh+0x8e>
- 146:	40 95       	com	r20
- 148:	84 23       	and	r24, r20
- 14a:	4f e3       	ldi	r20, 0x3F	; 63
- 14c:	5d e0       	ldi	r21, 0x0D	; 13
- 14e:	63 e0       	ldi	r22, 0x03	; 3
- 150:	41 50       	subi	r20, 0x01	; 1
- 152:	50 40       	sbci	r21, 0x00	; 0
- 154:	60 40       	sbci	r22, 0x00	; 0
- 156:	e1 f7       	brne	.-8      	; 0x150 <_ZN3SPI5shiftEh+0xa0>
- 158:	00 c0       	rjmp	.+0      	; 0x15a <_ZN3SPI5shiftEh+0xaa>
- 15a:	00 00       	nop
- 15c:	98 b3       	in	r25, 0x18	; 24
- 15e:	a9 01       	movw	r20, r18
- 160:	02 80       	ldd	r0, Z+2	; 0x02
- 162:	02 c0       	rjmp	.+4      	; 0x168 <_ZN3SPI5shiftEh+0xb8>
- 164:	44 0f       	add	r20, r20
- 166:	55 1f       	adc	r21, r21
- 168:	0a 94       	dec	r0
- 16a:	e2 f7       	brpl	.-8      	; 0x164 <_ZN3SPI5shiftEh+0xb4>
- 16c:	40 95       	com	r20
- 16e:	49 23       	and	r20, r25
- 170:	48 bb       	out	0x18, r20	; 24
- 172:	4f e3       	ldi	r20, 0x3F	; 63
- 174:	5d e0       	ldi	r21, 0x0D	; 13
- 176:	63 e0       	ldi	r22, 0x03	; 3
- 178:	41 50       	subi	r20, 0x01	; 1
- 17a:	50 40       	sbci	r21, 0x00	; 0
- 17c:	60 40       	sbci	r22, 0x00	; 0
- 17e:	e1 f7       	brne	.-8      	; 0x178 <_ZN3SPI5shiftEh+0xc8>
- 180:	00 c0       	rjmp	.+0      	; 0x182 <_ZN3SPI5shiftEh+0xd2>
- 182:	00 00       	nop
- 184:	cf 5f       	subi	r28, 0xFF	; 255
- 186:	c8 30       	cpi	r28, 0x08	; 8
- 188:	08 f4       	brcc	.+2      	; 0x18c <_ZN3SPI5shiftEh+0xdc>
- 18a:	a3 cf       	rjmp	.-186    	; 0xd2 <_ZN3SPI5shiftEh+0x22>
- 18c:	cf 91       	pop	r28
+  fe:	03 c0       	rjmp	.+6      	; 0x106 <_ZN3SPI5shiftEh+0x56>
+ 100:	40 95       	com	r20
+ 102:	49 23       	and	r20, r25
+ 104:	48 bb       	out	0x18, r20	; 24
+ 106:	68 2f       	mov	r22, r24
+ 108:	66 0f       	add	r22, r22
+ 10a:	46 b3       	in	r20, 0x16	; 22
+ 10c:	80 81       	ld	r24, Z
+ 10e:	50 e0       	ldi	r21, 0x00	; 0
+ 110:	08 2e       	mov	r0, r24
+ 112:	02 c0       	rjmp	.+4      	; 0x118 <_ZN3SPI5shiftEh+0x68>
+ 114:	55 95       	asr	r21
+ 116:	47 95       	ror	r20
+ 118:	0a 94       	dec	r0
+ 11a:	e2 f7       	brpl	.-8      	; 0x114 <_ZN3SPI5shiftEh+0x64>
+ 11c:	40 ff       	sbrs	r20, 0
+ 11e:	09 c0       	rjmp	.+18     	; 0x132 <_ZN3SPI5shiftEh+0x82>
+ 120:	a9 01       	movw	r20, r18
+ 122:	02 c0       	rjmp	.+4      	; 0x128 <_ZN3SPI5shiftEh+0x78>
+ 124:	44 0f       	add	r20, r20
+ 126:	55 1f       	adc	r21, r21
+ 128:	8a 95       	dec	r24
+ 12a:	e2 f7       	brpl	.-8      	; 0x124 <_ZN3SPI5shiftEh+0x74>
+ 12c:	ca 01       	movw	r24, r20
+ 12e:	86 2b       	or	r24, r22
+ 130:	09 c0       	rjmp	.+18     	; 0x144 <_ZN3SPI5shiftEh+0x94>
+ 132:	d9 01       	movw	r26, r18
+ 134:	02 c0       	rjmp	.+4      	; 0x13a <_ZN3SPI5shiftEh+0x8a>
+ 136:	aa 0f       	add	r26, r26
+ 138:	bb 1f       	adc	r27, r27
+ 13a:	8a 95       	dec	r24
+ 13c:	e2 f7       	brpl	.-8      	; 0x136 <_ZN3SPI5shiftEh+0x86>
+ 13e:	cd 01       	movw	r24, r26
+ 140:	80 95       	com	r24
+ 142:	86 23       	and	r24, r22
+ 144:	a7 ea       	ldi	r26, 0xA7	; 167
+ 146:	b1 e6       	ldi	r27, 0x61	; 97
+ 148:	11 97       	sbiw	r26, 0x01	; 1
+ 14a:	f1 f7       	brne	.-4      	; 0x148 <_ZN3SPI5shiftEh+0x98>
+ 14c:	00 c0       	rjmp	.+0      	; 0x14e <_ZN3SPI5shiftEh+0x9e>
+ 14e:	00 00       	nop
+ 150:	98 b3       	in	r25, 0x18	; 24
+ 152:	a9 01       	movw	r20, r18
+ 154:	02 80       	ldd	r0, Z+2	; 0x02
+ 156:	02 c0       	rjmp	.+4      	; 0x15c <_ZN3SPI5shiftEh+0xac>
+ 158:	44 0f       	add	r20, r20
+ 15a:	55 1f       	adc	r21, r21
+ 15c:	0a 94       	dec	r0
+ 15e:	e2 f7       	brpl	.-8      	; 0x158 <_ZN3SPI5shiftEh+0xa8>
+ 160:	40 95       	com	r20
+ 162:	49 23       	and	r20, r25
+ 164:	48 bb       	out	0x18, r20	; 24
+ 166:	a7 ea       	ldi	r26, 0xA7	; 167
+ 168:	b1 e6       	ldi	r27, 0x61	; 97
+ 16a:	11 97       	sbiw	r26, 0x01	; 1
+ 16c:	f1 f7       	brne	.-4      	; 0x16a <_ZN3SPI5shiftEh+0xba>
+ 16e:	00 c0       	rjmp	.+0      	; 0x170 <_ZN3SPI5shiftEh+0xc0>
+ 170:	00 00       	nop
+ 172:	71 50       	subi	r23, 0x01	; 1
+ 174:	09 f0       	breq	.+2      	; 0x178 <_ZN3SPI5shiftEh+0xc8>
+ 176:	ac cf       	rjmp	.-168    	; 0xd0 <_ZN3SPI5shiftEh+0x20>
+ 178:	98 b3       	in	r25, 0x18	; 24
+ 17a:	21 e0       	ldi	r18, 0x01	; 1
+ 17c:	30 e0       	ldi	r19, 0x00	; 0
+ 17e:	03 80       	ldd	r0, Z+3	; 0x03
+ 180:	02 c0       	rjmp	.+4      	; 0x186 <_ZN3SPI5shiftEh+0xd6>
+ 182:	22 0f       	add	r18, r18
+ 184:	33 1f       	adc	r19, r19
+ 186:	0a 94       	dec	r0
+ 188:	e2 f7       	brpl	.-8      	; 0x182 <_ZN3SPI5shiftEh+0xd2>
+ 18a:	92 27       	eor	r25, r18
+ 18c:	98 bb       	out	0x18, r25	; 24
  18e:	08 95       	ret
 
 00000190 <main>:
@@ -256,29 +256,31 @@ Disassembly of section .text:
  1ac:	03 e0       	ldi	r16, 0x03	; 3
  1ae:	53 df       	rcall	.-346    	; 0x56 <_ZN3SPI6configEhhhh>
  1b0:	bc 9a       	sbi	0x17, 4	; 23
- 1b2:	0e 2d       	mov	r16, r14
- 1b4:	ef 2c       	mov	r14, r15
- 1b6:	10 e1       	ldi	r17, 0x10	; 16
- 1b8:	80 2f       	mov	r24, r16
- 1ba:	9e 2d       	mov	r25, r14
- 1bc:	6f ea       	ldi	r22, 0xAF	; 175
- 1be:	78 df       	rcall	.-272    	; 0xb0 <_ZN3SPI5shiftEh>
- 1c0:	8f e3       	ldi	r24, 0x3F	; 63
- 1c2:	9d e0       	ldi	r25, 0x0D	; 13
- 1c4:	a3 e0       	ldi	r26, 0x03	; 3
- 1c6:	81 50       	subi	r24, 0x01	; 1
- 1c8:	90 40       	sbci	r25, 0x00	; 0
- 1ca:	a0 40       	sbci	r26, 0x00	; 0
- 1cc:	e1 f7       	brne	.-8      	; 0x1c6 <main+0x36>
- 1ce:	00 c0       	rjmp	.+0      	; 0x1d0 <main+0x40>
- 1d0:	00 00       	nop
- 1d2:	88 b3       	in	r24, 0x18	; 24
- 1d4:	81 27       	eor	r24, r17
- 1d6:	88 bb       	out	0x18, r24	; 24
- 1d8:	ef cf       	rjmp	.-34     	; 0x1b8 <main+0x28>
+ 1b2:	10 e0       	ldi	r17, 0x00	; 0
+ 1b4:	de 2c       	mov	r13, r14
+ 1b6:	ef 2c       	mov	r14, r15
+ 1b8:	00 e1       	ldi	r16, 0x10	; 16
+ 1ba:	8d 2d       	mov	r24, r13
+ 1bc:	9e 2d       	mov	r25, r14
+ 1be:	61 2f       	mov	r22, r17
+ 1c0:	77 df       	rcall	.-274    	; 0xb0 <_ZN3SPI5shiftEh>
+ 1c2:	8f e3       	ldi	r24, 0x3F	; 63
+ 1c4:	9d e0       	ldi	r25, 0x0D	; 13
+ 1c6:	a3 e0       	ldi	r26, 0x03	; 3
+ 1c8:	81 50       	subi	r24, 0x01	; 1
+ 1ca:	90 40       	sbci	r25, 0x00	; 0
+ 1cc:	a0 40       	sbci	r26, 0x00	; 0
+ 1ce:	e1 f7       	brne	.-8      	; 0x1c8 <main+0x38>
+ 1d0:	00 c0       	rjmp	.+0      	; 0x1d2 <main+0x42>
+ 1d2:	00 00       	nop
+ 1d4:	88 b3       	in	r24, 0x18	; 24
+ 1d6:	80 27       	eor	r24, r16
+ 1d8:	88 bb       	out	0x18, r24	; 24
+ 1da:	1f 5f       	subi	r17, 0xFF	; 255
+ 1dc:	ee cf       	rjmp	.-36     	; 0x1ba <main+0x2a>
 
-000001da <_exit>:
- 1da:	f8 94       	cli
+000001de <_exit>:
+ 1de:	f8 94       	cli
 
-000001dc <__stop_program>:
- 1dc:	ff cf       	rjmp	.-2      	; 0x1dc <__stop_program>
+000001e0 <__stop_program>:
+ 1e0:	ff cf       	rjmp	.-2      	; 0x1e0 <__stop_program>

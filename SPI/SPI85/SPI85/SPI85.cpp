@@ -28,17 +28,18 @@ int main(void)
 	SPI device;
 	device.config(0,1,2,3);
 	DDRB |= 1<<4;
+	uint8_t aux=0;
     while(1)
     {
-		device.shift(50);
+		device.shift(aux);
 		_delay_ms(1000);
-		PORTB ^= 1<<4;
+		PORTB ^= 1<<4;		
+		aux++;
         //TODO:: Please write your application code 
     }
 }
 /***********************************************************************************************************************************************/
 void SPI::config(uint8_t miso,uint8_t mosi,uint8_t sclk,uint8_t ss){
-	
 	pinMISO = miso;
 	pinMOSI = mosi;
 	pinSCLK = sclk;
@@ -52,16 +53,18 @@ uint8_t SPI::shift(uint8_t data){
 	//buffer = data;
 	buffer = data;	
 	PORTB |= 1<<pinSS;
-	for(uint8_t i;i<8;i++)
+	for(uint8_t i=0;i<=8;i++)
 	{		
 		PORTB |= 1<<pinSCLK;//Coloca a linha de clock em nivel alto.	
 		(0x80 & buffer) ? PORTB |= 1<<pinMOSI : PORTB &= ~(1<<pinMOSI); //Coloque o bit MSB no pino MOSI.
 		buffer = buffer	<<1;
 		(PINB & (1<<pinMISO)) ? buffer |= 1<<pinMISO : buffer &= ~(1<<pinMISO); //Coloque o bit contido em pinMISO no buffer.
-		//_delay_ms(1000);
+		_delay_ms(100);
 		PORTB &=~(1<<pinSCLK);//Coloca a linha de clock em nivel baixo.
-		//_delay_ms(1000);		
+		_delay_ms(100);		
 	}
+	PORTB ^= 1<<pinSS;
+	
 	return buffer;
 }
 /***********************************************************************************************************************************************/
