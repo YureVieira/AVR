@@ -3,25 +3,25 @@ SPI85.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000001d0  00000000  00000000  00000054  2**1
+  0 .text         00000256  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .stab         000006cc  00000000  00000000  00000224  2**2
+  1 .stab         000006cc  00000000  00000000  000002ac  2**2
                   CONTENTS, READONLY, DEBUGGING
-  2 .stabstr      00000085  00000000  00000000  000008f0  2**0
+  2 .stabstr      00000085  00000000  00000000  00000978  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_aranges 00000080  00000000  00000000  00000978  2**3
+  3 .debug_aranges 00000080  00000000  00000000  00000a00  2**3
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   00000546  00000000  00000000  000009f8  2**0
+  4 .debug_info   000006a3  00000000  00000000  00000a80  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 000001e9  00000000  00000000  00000f3e  2**0
+  5 .debug_abbrev 0000022d  00000000  00000000  00001123  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   00000365  00000000  00000000  00001127  2**0
+  6 .debug_line   000003b6  00000000  00000000  00001350  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  00000060  00000000  00000000  0000148c  2**2
+  7 .debug_frame  0000005c  00000000  00000000  00001708  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    0000016b  00000000  00000000  000014ec  2**0
+  8 .debug_str    0000015e  00000000  00000000  00001764  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    000001b0  00000000  00000000  00001657  2**0
+  9 .debug_loc    00000218  00000000  00000000  000018c2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -55,8 +55,8 @@ Disassembly of section .text:
   2a:	10 e0       	ldi	r17, 0x00	; 0
   2c:	a0 e6       	ldi	r26, 0x60	; 96
   2e:	b0 e0       	ldi	r27, 0x00	; 0
-  30:	e0 ed       	ldi	r30, 0xD0	; 208
-  32:	f1 e0       	ldi	r31, 0x01	; 1
+  30:	e6 e5       	ldi	r30, 0x56	; 86
+  32:	f2 e0       	ldi	r31, 0x02	; 2
   34:	02 c0       	rjmp	.+4      	; 0x3a <__CCP__+0x6>
   36:	05 90       	lpm	r0, Z+
   38:	0d 92       	st	X+, r0
@@ -77,275 +77,380 @@ Disassembly of section .text:
   4a:	a0 36       	cpi	r26, 0x60	; 96
   4c:	b1 07       	cpc	r27, r17
   4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
-  50:	9d d0       	rcall	.+314    	; 0x18c <main>
-  52:	bc c0       	rjmp	.+376    	; 0x1cc <_exit>
+  50:	e0 d0       	rcall	.+448    	; 0x212 <main>
+  52:	ff c0       	rjmp	.+510    	; 0x252 <_exit>
 
 00000054 <__bad_interrupt>:
   54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
 
 00000056 <_ZN3SPI6configEhhhh>:
-		PORTB ^= 1<<4;
+		aux++;
         //TODO:: Please write your application code 
     }
 }
 /***********************************************************************************************************************************************/
-void SPI::config(uint8_t miso,uint8_t mosi,uint8_t sclk,uint8_t ss){
+void SPI::config(uint8_t miso,uint8_t mosi,uint8_t SCK,uint8_t mode){
   56:	0f 93       	push	r16
-  58:	1f 93       	push	r17
-  5a:	fc 01       	movw	r30, r24
-	
+  58:	fc 01       	movw	r30, r24
 	pinMISO = miso;
-  5c:	60 83       	st	Z, r22
+  5a:	60 83       	st	Z, r22
 	pinMOSI = mosi;
-  5e:	41 83       	std	Z+1, r20	; 0x01
-	pinSCLK = sclk;
-  60:	22 83       	std	Z+2, r18	; 0x02
-	pinSS = ss;
-  62:	03 83       	std	Z+3, r16	; 0x03
-	DDRB |= (1<<pinMOSI)|(1<<pinSCLK)|(1<<pinSS);
-  64:	37 b3       	in	r19, 0x17	; 23
-  66:	81 e0       	ldi	r24, 0x01	; 1
-  68:	90 e0       	ldi	r25, 0x00	; 0
-  6a:	bc 01       	movw	r22, r24
-  6c:	02 c0       	rjmp	.+4      	; 0x72 <_ZN3SPI6configEhhhh+0x1c>
-  6e:	66 0f       	add	r22, r22
-  70:	77 1f       	adc	r23, r23
-  72:	4a 95       	dec	r20
-  74:	e2 f7       	brpl	.-8      	; 0x6e <_ZN3SPI6configEhhhh+0x18>
-  76:	ab 01       	movw	r20, r22
-  78:	43 2b       	or	r20, r19
-  7a:	bc 01       	movw	r22, r24
-  7c:	02 c0       	rjmp	.+4      	; 0x82 <_ZN3SPI6configEhhhh+0x2c>
-  7e:	66 0f       	add	r22, r22
-  80:	77 1f       	adc	r23, r23
-  82:	2a 95       	dec	r18
-  84:	e2 f7       	brpl	.-8      	; 0x7e <_ZN3SPI6configEhhhh+0x28>
-  86:	9b 01       	movw	r18, r22
-  88:	24 2b       	or	r18, r20
-  8a:	ac 01       	movw	r20, r24
-  8c:	02 c0       	rjmp	.+4      	; 0x92 <_ZN3SPI6configEhhhh+0x3c>
-  8e:	44 0f       	add	r20, r20
-  90:	55 1f       	adc	r21, r21
-  92:	0a 95       	dec	r16
-  94:	e2 f7       	brpl	.-8      	; 0x8e <_ZN3SPI6configEhhhh+0x38>
-  96:	8a 01       	movw	r16, r20
-  98:	02 2b       	or	r16, r18
-  9a:	07 bb       	out	0x17, r16	; 23
+  5c:	41 83       	std	Z+1, r20	; 0x01
+	pinSCK = SCK;
+  5e:	22 83       	std	Z+2, r18	; 0x02
+	DDRB |= (1<<pinMOSI)|(1<<pinSCK);
+  60:	37 b3       	in	r19, 0x17	; 23
+  62:	81 e0       	ldi	r24, 0x01	; 1
+  64:	90 e0       	ldi	r25, 0x00	; 0
+  66:	bc 01       	movw	r22, r24
+  68:	02 c0       	rjmp	.+4      	; 0x6e <_ZN3SPI6configEhhhh+0x18>
+  6a:	66 0f       	add	r22, r22
+  6c:	77 1f       	adc	r23, r23
+  6e:	4a 95       	dec	r20
+  70:	e2 f7       	brpl	.-8      	; 0x6a <_ZN3SPI6configEhhhh+0x14>
+  72:	ab 01       	movw	r20, r22
+  74:	43 2b       	or	r20, r19
+  76:	bc 01       	movw	r22, r24
+  78:	02 c0       	rjmp	.+4      	; 0x7e <_ZN3SPI6configEhhhh+0x28>
+  7a:	66 0f       	add	r22, r22
+  7c:	77 1f       	adc	r23, r23
+  7e:	2a 95       	dec	r18
+  80:	e2 f7       	brpl	.-8      	; 0x7a <_ZN3SPI6configEhhhh+0x24>
+  82:	9b 01       	movw	r18, r22
+  84:	24 2b       	or	r18, r20
+  86:	27 bb       	out	0x17, r18	; 23
 	DDRB &= ~(1<<pinMISO);
-  9c:	27 b3       	in	r18, 0x17	; 23
-  9e:	00 80       	ld	r0, Z
-  a0:	02 c0       	rjmp	.+4      	; 0xa6 <_ZN3SPI6configEhhhh+0x50>
-  a2:	88 0f       	add	r24, r24
-  a4:	99 1f       	adc	r25, r25
-  a6:	0a 94       	dec	r0
-  a8:	e2 f7       	brpl	.-8      	; 0xa2 <_ZN3SPI6configEhhhh+0x4c>
-  aa:	80 95       	com	r24
-  ac:	82 23       	and	r24, r18
-  ae:	87 bb       	out	0x17, r24	; 23
-}
-  b0:	1f 91       	pop	r17
-  b2:	0f 91       	pop	r16
-  b4:	08 95       	ret
-
-000000b6 <_ZN3SPI5shiftEh>:
-/***********************************************************************************************************************************************/
-uint8_t SPI::shift(uint8_t data){
-  b6:	dc 01       	movw	r26, r24
-	uint8_t buffer;
-	//buffer = data;
-	buffer = data;	
-	PORTB |= 1<<pinSS;
-  b8:	88 b3       	in	r24, 0x18	; 24
-  ba:	e1 e0       	ldi	r30, 0x01	; 1
-  bc:	f0 e0       	ldi	r31, 0x00	; 0
-  be:	9f 01       	movw	r18, r30
-  c0:	13 96       	adiw	r26, 0x03	; 3
-  c2:	0c 90       	ld	r0, X
-  c4:	13 97       	sbiw	r26, 0x03	; 3
-  c6:	02 c0       	rjmp	.+4      	; 0xcc <_ZN3SPI5shiftEh+0x16>
-  c8:	22 0f       	add	r18, r18
-  ca:	33 1f       	adc	r19, r19
+  88:	27 b3       	in	r18, 0x17	; 23
+  8a:	00 80       	ld	r0, Z
+  8c:	02 c0       	rjmp	.+4      	; 0x92 <_ZN3SPI6configEhhhh+0x3c>
+  8e:	88 0f       	add	r24, r24
+  90:	99 1f       	adc	r25, r25
+  92:	0a 94       	dec	r0
+  94:	e2 f7       	brpl	.-8      	; 0x8e <_ZN3SPI6configEhhhh+0x38>
+  96:	80 95       	com	r24
+  98:	82 23       	and	r24, r18
+  9a:	87 bb       	out	0x17, r24	; 23
+	
+	if(mode == 2 || mode == 3)
+  9c:	02 50       	subi	r16, 0x02	; 2
+  9e:	02 30       	cpi	r16, 0x02	; 2
+  a0:	68 f4       	brcc	.+26     	; 0xbc <_ZN3SPI6configEhhhh+0x66>
+	PORTB |= (1<<pinSCK);             //Repouso em alto
+  a2:	48 b3       	in	r20, 0x18	; 24
+  a4:	21 e0       	ldi	r18, 0x01	; 1
+  a6:	30 e0       	ldi	r19, 0x00	; 0
+  a8:	c9 01       	movw	r24, r18
+  aa:	02 80       	ldd	r0, Z+2	; 0x02
+  ac:	02 c0       	rjmp	.+4      	; 0xb2 <_ZN3SPI6configEhhhh+0x5c>
+  ae:	88 0f       	add	r24, r24
+  b0:	99 1f       	adc	r25, r25
+  b2:	0a 94       	dec	r0
+  b4:	e2 f7       	brpl	.-8      	; 0xae <_ZN3SPI6configEhhhh+0x58>
+  b6:	84 2b       	or	r24, r20
+  b8:	88 bb       	out	0x18, r24	; 24
+  ba:	0d c0       	rjmp	.+26     	; 0xd6 <_ZN3SPI6configEhhhh+0x80>
+	else
+	PORTB &= ~(1<<pinSCK);             //Repouso em baixo
+  bc:	48 b3       	in	r20, 0x18	; 24
+  be:	21 e0       	ldi	r18, 0x01	; 1
+  c0:	30 e0       	ldi	r19, 0x00	; 0
+  c2:	c9 01       	movw	r24, r18
+  c4:	02 80       	ldd	r0, Z+2	; 0x02
+  c6:	02 c0       	rjmp	.+4      	; 0xcc <_ZN3SPI6configEhhhh+0x76>
+  c8:	88 0f       	add	r24, r24
+  ca:	99 1f       	adc	r25, r25
   cc:	0a 94       	dec	r0
-  ce:	e2 f7       	brpl	.-8      	; 0xc8 <_ZN3SPI5shiftEh+0x12>
-  d0:	28 2b       	or	r18, r24
-  d2:	28 bb       	out	0x18, r18	; 24
-	for(uint8_t i;i<8;i++)
-  d4:	90 e0       	ldi	r25, 0x00	; 0
-	{		
-		PORTB |= 1<<pinSCLK;//Coloca a linha de clock em nivel alto.	
-  d6:	21 e0       	ldi	r18, 0x01	; 1
-  d8:	30 e0       	ldi	r19, 0x00	; 0
-  da:	88 b3       	in	r24, 0x18	; 24
-  dc:	a9 01       	movw	r20, r18
-  de:	12 96       	adiw	r26, 0x02	; 2
-  e0:	0c 90       	ld	r0, X
-  e2:	12 97       	sbiw	r26, 0x02	; 2
-  e4:	02 c0       	rjmp	.+4      	; 0xea <_ZN3SPI5shiftEh+0x34>
-  e6:	44 0f       	add	r20, r20
-  e8:	55 1f       	adc	r21, r21
-  ea:	0a 94       	dec	r0
-  ec:	e2 f7       	brpl	.-8      	; 0xe6 <_ZN3SPI5shiftEh+0x30>
-  ee:	48 2b       	or	r20, r24
-  f0:	48 bb       	out	0x18, r20	; 24
-		(0x80 & buffer) ? PORTB |= 1<<pinMOSI : PORTB &= ~(1<<pinMOSI); //Coloque o bit MSB no pino MOSI.
-  f2:	66 23       	and	r22, r22
-  f4:	6c f4       	brge	.+26     	; 0x110 <_ZN3SPI5shiftEh+0x5a>
-  f6:	88 b3       	in	r24, 0x18	; 24
-  f8:	f9 01       	movw	r30, r18
-  fa:	11 96       	adiw	r26, 0x01	; 1
-  fc:	0c 90       	ld	r0, X
-  fe:	11 97       	sbiw	r26, 0x01	; 1
- 100:	02 c0       	rjmp	.+4      	; 0x106 <_ZN3SPI5shiftEh+0x50>
- 102:	ee 0f       	add	r30, r30
- 104:	ff 1f       	adc	r31, r31
- 106:	0a 94       	dec	r0
- 108:	e2 f7       	brpl	.-8      	; 0x102 <_ZN3SPI5shiftEh+0x4c>
- 10a:	e8 2b       	or	r30, r24
- 10c:	e8 bb       	out	0x18, r30	; 24
- 10e:	0d c0       	rjmp	.+26     	; 0x12a <_ZN3SPI5shiftEh+0x74>
- 110:	88 b3       	in	r24, 0x18	; 24
- 112:	a9 01       	movw	r20, r18
- 114:	11 96       	adiw	r26, 0x01	; 1
- 116:	0c 90       	ld	r0, X
- 118:	11 97       	sbiw	r26, 0x01	; 1
- 11a:	02 c0       	rjmp	.+4      	; 0x120 <_ZN3SPI5shiftEh+0x6a>
- 11c:	44 0f       	add	r20, r20
- 11e:	55 1f       	adc	r21, r21
- 120:	0a 94       	dec	r0
- 122:	e2 f7       	brpl	.-8      	; 0x11c <_ZN3SPI5shiftEh+0x66>
- 124:	40 95       	com	r20
- 126:	48 23       	and	r20, r24
- 128:	48 bb       	out	0x18, r20	; 24
-		buffer = buffer	<<1;
- 12a:	e6 2f       	mov	r30, r22
- 12c:	ee 0f       	add	r30, r30
-		(PINB & (1<<pinMISO)) ? buffer |= 1<<pinMISO : buffer &= ~(1<<pinMISO); //Coloque o bit contido em pinMISO no buffer.
- 12e:	46 b3       	in	r20, 0x16	; 22
- 130:	8c 91       	ld	r24, X
- 132:	50 e0       	ldi	r21, 0x00	; 0
- 134:	08 2e       	mov	r0, r24
- 136:	02 c0       	rjmp	.+4      	; 0x13c <_ZN3SPI5shiftEh+0x86>
- 138:	55 95       	asr	r21
- 13a:	47 95       	ror	r20
- 13c:	0a 94       	dec	r0
- 13e:	e2 f7       	brpl	.-8      	; 0x138 <_ZN3SPI5shiftEh+0x82>
- 140:	40 ff       	sbrs	r20, 0
- 142:	08 c0       	rjmp	.+16     	; 0x154 <_ZN3SPI5shiftEh+0x9e>
- 144:	b9 01       	movw	r22, r18
- 146:	02 c0       	rjmp	.+4      	; 0x14c <_ZN3SPI5shiftEh+0x96>
- 148:	66 0f       	add	r22, r22
- 14a:	77 1f       	adc	r23, r23
- 14c:	8a 95       	dec	r24
- 14e:	e2 f7       	brpl	.-8      	; 0x148 <_ZN3SPI5shiftEh+0x92>
- 150:	6e 2b       	or	r22, r30
- 152:	09 c0       	rjmp	.+18     	; 0x166 <_ZN3SPI5shiftEh+0xb0>
- 154:	a9 01       	movw	r20, r18
- 156:	02 c0       	rjmp	.+4      	; 0x15c <_ZN3SPI5shiftEh+0xa6>
- 158:	44 0f       	add	r20, r20
- 15a:	55 1f       	adc	r21, r21
- 15c:	8a 95       	dec	r24
- 15e:	e2 f7       	brpl	.-8      	; 0x158 <_ZN3SPI5shiftEh+0xa2>
- 160:	64 2f       	mov	r22, r20
- 162:	60 95       	com	r22
- 164:	6e 23       	and	r22, r30
-		//_delay_ms(1000);
-		PORTB &=~(1<<pinSCLK);//Coloca a linha de clock em nivel baixo.
- 166:	88 b3       	in	r24, 0x18	; 24
- 168:	a9 01       	movw	r20, r18
- 16a:	12 96       	adiw	r26, 0x02	; 2
- 16c:	0c 90       	ld	r0, X
- 16e:	12 97       	sbiw	r26, 0x02	; 2
- 170:	02 c0       	rjmp	.+4      	; 0x176 <_ZN3SPI5shiftEh+0xc0>
- 172:	44 0f       	add	r20, r20
- 174:	55 1f       	adc	r21, r21
- 176:	0a 94       	dec	r0
- 178:	e2 f7       	brpl	.-8      	; 0x172 <_ZN3SPI5shiftEh+0xbc>
- 17a:	40 95       	com	r20
- 17c:	48 23       	and	r20, r24
- 17e:	48 bb       	out	0x18, r20	; 24
-uint8_t SPI::shift(uint8_t data){
-	uint8_t buffer;
-	//buffer = data;
-	buffer = data;	
-	PORTB |= 1<<pinSS;
-	for(uint8_t i;i<8;i++)
- 180:	9f 5f       	subi	r25, 0xFF	; 255
- 182:	98 30       	cpi	r25, 0x08	; 8
- 184:	09 f0       	breq	.+2      	; 0x188 <_ZN3SPI5shiftEh+0xd2>
- 186:	a9 cf       	rjmp	.-174    	; 0xda <_ZN3SPI5shiftEh+0x24>
-		//_delay_ms(1000);
-		PORTB &=~(1<<pinSCLK);//Coloca a linha de clock em nivel baixo.
-		//_delay_ms(1000);		
-	}
-	return buffer;
+  ce:	e2 f7       	brpl	.-8      	; 0xc8 <_ZN3SPI6configEhhhh+0x72>
+  d0:	80 95       	com	r24
+  d2:	84 23       	and	r24, r20
+  d4:	88 bb       	out	0x18, r24	; 24
 }
- 188:	86 2f       	mov	r24, r22
- 18a:	08 95       	ret
+  d6:	0f 91       	pop	r16
+  d8:	08 95       	ret
 
-0000018c <main>:
-	void config(uint8_t miso,uint8_t mosi,uint8_t sclk,uint8_t ss);
-	uint8_t shift(uint8_t data);
-};
-
-int main(void)
+000000da <_ZN3SPI8transferEh>:
+/***********************************************************************************************************************************************/
+uint8_t SPI::transfer(uint8_t data){
+  da:	fc 01       	movw	r30, r24
+uint8_t _byte;
+_byte = data;
+if(_mode==1 || _mode==3)
+  dc:	93 81       	ldd	r25, Z+3	; 0x03
+  de:	91 30       	cpi	r25, 0x01	; 1
+  e0:	39 f0       	breq	.+14     	; 0xf0 <_ZN3SPI8transferEh+0x16>
+  e2:	93 30       	cpi	r25, 0x03	; 3
+  e4:	09 f0       	breq	.+2      	; 0xe8 <_ZN3SPI8transferEh+0xe>
+  e6:	4d c0       	rjmp	.+154    	; 0x182 <_ZN3SPI8transferEh+0xa8>
+  e8:	86 2f       	mov	r24, r22
+  ea:	48 e0       	ldi	r20, 0x08	; 8
+  ec:	50 e0       	ldi	r21, 0x00	; 0
+  ee:	03 c0       	rjmp	.+6      	; 0xf6 <_ZN3SPI8transferEh+0x1c>
+  f0:	86 2f       	mov	r24, r22
+  f2:	48 e0       	ldi	r20, 0x08	; 8
+  f4:	50 e0       	ldi	r21, 0x00	; 0
 {
- 18c:	cf 93       	push	r28
- 18e:	df 93       	push	r29
- 190:	00 d0       	rcall	.+0      	; 0x192 <main+0x6>
- 192:	00 d0       	rcall	.+0      	; 0x194 <main+0x8>
- 194:	cd b7       	in	r28, 0x3d	; 61
- 196:	de b7       	in	r29, 0x3e	; 62
-	SPI device;
-	device.config(0,1,2,3);
- 198:	ce 01       	movw	r24, r28
- 19a:	01 96       	adiw	r24, 0x01	; 1
- 19c:	60 e0       	ldi	r22, 0x00	; 0
- 19e:	41 e0       	ldi	r20, 0x01	; 1
- 1a0:	22 e0       	ldi	r18, 0x02	; 2
- 1a2:	03 e0       	ldi	r16, 0x03	; 3
- 1a4:	58 df       	rcall	.-336    	; 0x56 <_ZN3SPI6configEhhhh>
-	DDRB |= 1<<4;
- 1a6:	bc 9a       	sbi	0x17, 4	; 23
-    while(1)
-    {
-		device.shift(50);
-		_delay_ms(1000);
-		PORTB ^= 1<<4;
- 1a8:	10 e1       	ldi	r17, 0x10	; 16
-	SPI device;
-	device.config(0,1,2,3);
-	DDRB |= 1<<4;
-    while(1)
-    {
-		device.shift(50);
- 1aa:	ce 01       	movw	r24, r28
- 1ac:	01 96       	adiw	r24, 0x01	; 1
- 1ae:	62 e3       	ldi	r22, 0x32	; 50
- 1b0:	82 df       	rcall	.-252    	; 0xb6 <_ZN3SPI5shiftEh>
+	for(int i=0;i<8;i++)
+	{
+		if(_byte & 0x80) PORTB |= (1<<pinMOSI);
+  f6:	61 e0       	ldi	r22, 0x01	; 1
+  f8:	70 e0       	ldi	r23, 0x00	; 0
+  fa:	88 23       	and	r24, r24
+  fc:	5c f4       	brge	.+22     	; 0x114 <_ZN3SPI8transferEh+0x3a>
+  fe:	98 b3       	in	r25, 0x18	; 24
+ 100:	9b 01       	movw	r18, r22
+ 102:	01 80       	ldd	r0, Z+1	; 0x01
+ 104:	02 c0       	rjmp	.+4      	; 0x10a <_ZN3SPI8transferEh+0x30>
+ 106:	22 0f       	add	r18, r18
+ 108:	33 1f       	adc	r19, r19
+ 10a:	0a 94       	dec	r0
+ 10c:	e2 f7       	brpl	.-8      	; 0x106 <_ZN3SPI8transferEh+0x2c>
+ 10e:	29 2b       	or	r18, r25
+ 110:	28 bb       	out	0x18, r18	; 24
+ 112:	0b c0       	rjmp	.+22     	; 0x12a <_ZN3SPI8transferEh+0x50>
+		else PORTB &= ~(1<<pinMOSI);
+ 114:	98 b3       	in	r25, 0x18	; 24
+ 116:	9b 01       	movw	r18, r22
+ 118:	01 80       	ldd	r0, Z+1	; 0x01
+ 11a:	02 c0       	rjmp	.+4      	; 0x120 <_ZN3SPI8transferEh+0x46>
+ 11c:	22 0f       	add	r18, r18
+ 11e:	33 1f       	adc	r19, r19
+ 120:	0a 94       	dec	r0
+ 122:	e2 f7       	brpl	.-8      	; 0x11c <_ZN3SPI8transferEh+0x42>
+ 124:	20 95       	com	r18
+ 126:	29 23       	and	r18, r25
+ 128:	28 bb       	out	0x18, r18	; 24
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 1b2:	8f e3       	ldi	r24, 0x3F	; 63
- 1b4:	9d e0       	ldi	r25, 0x0D	; 13
- 1b6:	a3 e0       	ldi	r26, 0x03	; 3
- 1b8:	81 50       	subi	r24, 0x01	; 1
- 1ba:	90 40       	sbci	r25, 0x00	; 0
- 1bc:	a0 40       	sbci	r26, 0x00	; 0
- 1be:	e1 f7       	brne	.-8      	; 0x1b8 <main+0x2c>
- 1c0:	00 c0       	rjmp	.+0      	; 0x1c2 <main+0x36>
- 1c2:	00 00       	nop
+ 12a:	93 e0       	ldi	r25, 0x03	; 3
+ 12c:	9a 95       	dec	r25
+ 12e:	f1 f7       	brne	.-4      	; 0x12c <_ZN3SPI8transferEh+0x52>
+ 130:	00 00       	nop
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK); /* a slave shifts out output data bit */
+ 132:	98 b3       	in	r25, 0x18	; 24
+ 134:	9b 01       	movw	r18, r22
+ 136:	02 80       	ldd	r0, Z+2	; 0x02
+ 138:	02 c0       	rjmp	.+4      	; 0x13e <_ZN3SPI8transferEh+0x64>
+ 13a:	22 0f       	add	r18, r18
+ 13c:	33 1f       	adc	r19, r19
+ 13e:	0a 94       	dec	r0
+ 140:	e2 f7       	brpl	.-8      	; 0x13a <_ZN3SPI8transferEh+0x60>
+ 142:	29 27       	eor	r18, r25
+ 144:	28 bb       	out	0x18, r18	; 24
+		_byte <<= 1;
+ 146:	88 0f       	add	r24, r24
+		if((PORTB & (1<<pinMISO))) _byte |= 0x01;
+ 148:	28 b3       	in	r18, 0x18	; 24
+ 14a:	30 e0       	ldi	r19, 0x00	; 0
+ 14c:	00 80       	ld	r0, Z
+ 14e:	02 c0       	rjmp	.+4      	; 0x154 <_ZN3SPI8transferEh+0x7a>
+ 150:	35 95       	asr	r19
+ 152:	27 95       	ror	r18
+ 154:	0a 94       	dec	r0
+ 156:	e2 f7       	brpl	.-8      	; 0x150 <_ZN3SPI8transferEh+0x76>
+ 158:	20 fd       	sbrc	r18, 0
+ 15a:	81 60       	ori	r24, 0x01	; 1
+ 15c:	93 e0       	ldi	r25, 0x03	; 3
+ 15e:	9a 95       	dec	r25
+ 160:	f1 f7       	brne	.-4      	; 0x15e <_ZN3SPI8transferEh+0x84>
+ 162:	00 00       	nop
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK); /* a slave latches input data bit */
+ 164:	98 b3       	in	r25, 0x18	; 24
+ 166:	9b 01       	movw	r18, r22
+ 168:	02 80       	ldd	r0, Z+2	; 0x02
+ 16a:	02 c0       	rjmp	.+4      	; 0x170 <_ZN3SPI8transferEh+0x96>
+ 16c:	22 0f       	add	r18, r18
+ 16e:	33 1f       	adc	r19, r19
+ 170:	0a 94       	dec	r0
+ 172:	e2 f7       	brpl	.-8      	; 0x16c <_ZN3SPI8transferEh+0x92>
+ 174:	29 27       	eor	r18, r25
+ 176:	28 bb       	out	0x18, r18	; 24
+ 178:	41 50       	subi	r20, 0x01	; 1
+ 17a:	50 40       	sbci	r21, 0x00	; 0
+uint8_t SPI::transfer(uint8_t data){
+uint8_t _byte;
+_byte = data;
+if(_mode==1 || _mode==3)
+{
+	for(int i=0;i<8;i++)
+ 17c:	09 f0       	breq	.+2      	; 0x180 <_ZN3SPI8transferEh+0xa6>
+ 17e:	bd cf       	rjmp	.-134    	; 0xfa <_ZN3SPI8transferEh+0x20>
+ 180:	08 95       	ret
+}
+/***********************************************************************************************************************************************/
+uint8_t SPI::transfer(uint8_t data){
+uint8_t _byte;
+_byte = data;
+if(_mode==1 || _mode==3)
+ 182:	86 2f       	mov	r24, r22
+ 184:	48 e0       	ldi	r20, 0x08	; 8
+ 186:	50 e0       	ldi	r21, 0x00	; 0
+{
+	for(int i=0;i<8;i++)
+	{
+		if((PORTB & (1<<pinMISO))) _byte |= 0x01;
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK);
+ 188:	61 e0       	ldi	r22, 0x01	; 1
+ 18a:	70 e0       	ldi	r23, 0x00	; 0
+}
+else
+{
+	for(int i=0;i<8;i++)
+	{
+		if((PORTB & (1<<pinMISO))) _byte |= 0x01;
+ 18c:	28 b3       	in	r18, 0x18	; 24
+ 18e:	30 e0       	ldi	r19, 0x00	; 0
+ 190:	00 80       	ld	r0, Z
+ 192:	02 c0       	rjmp	.+4      	; 0x198 <_ZN3SPI8transferEh+0xbe>
+ 194:	35 95       	asr	r19
+ 196:	27 95       	ror	r18
+ 198:	0a 94       	dec	r0
+ 19a:	e2 f7       	brpl	.-8      	; 0x194 <_ZN3SPI8transferEh+0xba>
+ 19c:	20 fd       	sbrc	r18, 0
+ 19e:	81 60       	ori	r24, 0x01	; 1
+ 1a0:	93 e0       	ldi	r25, 0x03	; 3
+ 1a2:	9a 95       	dec	r25
+ 1a4:	f1 f7       	brne	.-4      	; 0x1a2 <_ZN3SPI8transferEh+0xc8>
+ 1a6:	00 00       	nop
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK);
+ 1a8:	98 b3       	in	r25, 0x18	; 24
+ 1aa:	9b 01       	movw	r18, r22
+ 1ac:	02 80       	ldd	r0, Z+2	; 0x02
+ 1ae:	02 c0       	rjmp	.+4      	; 0x1b4 <_ZN3SPI8transferEh+0xda>
+ 1b0:	22 0f       	add	r18, r18
+ 1b2:	33 1f       	adc	r19, r19
+ 1b4:	0a 94       	dec	r0
+ 1b6:	e2 f7       	brpl	.-8      	; 0x1b0 <_ZN3SPI8transferEh+0xd6>
+ 1b8:	29 27       	eor	r18, r25
+ 1ba:	28 bb       	out	0x18, r18	; 24
+		_byte <<= 1;
+ 1bc:	88 0f       	add	r24, r24
+		if(_byte & 0x80)PORTB |= (1<<pinMOSI);
+ 1be:	5a f4       	brpl	.+22     	; 0x1d6 <_ZN3SPI8transferEh+0xfc>
+ 1c0:	98 b3       	in	r25, 0x18	; 24
+ 1c2:	9b 01       	movw	r18, r22
+ 1c4:	01 80       	ldd	r0, Z+1	; 0x01
+ 1c6:	02 c0       	rjmp	.+4      	; 0x1cc <_ZN3SPI8transferEh+0xf2>
+ 1c8:	22 0f       	add	r18, r18
+ 1ca:	33 1f       	adc	r19, r19
+ 1cc:	0a 94       	dec	r0
+ 1ce:	e2 f7       	brpl	.-8      	; 0x1c8 <_ZN3SPI8transferEh+0xee>
+ 1d0:	29 2b       	or	r18, r25
+ 1d2:	28 bb       	out	0x18, r18	; 24
+ 1d4:	0b c0       	rjmp	.+22     	; 0x1ec <_ZN3SPI8transferEh+0x112>
+		else PORTB &= ~(1<<pinMOSI);		
+ 1d6:	98 b3       	in	r25, 0x18	; 24
+ 1d8:	9b 01       	movw	r18, r22
+ 1da:	01 80       	ldd	r0, Z+1	; 0x01
+ 1dc:	02 c0       	rjmp	.+4      	; 0x1e2 <_ZN3SPI8transferEh+0x108>
+ 1de:	22 0f       	add	r18, r18
+ 1e0:	33 1f       	adc	r19, r19
+ 1e2:	0a 94       	dec	r0
+ 1e4:	e2 f7       	brpl	.-8      	; 0x1de <_ZN3SPI8transferEh+0x104>
+ 1e6:	20 95       	com	r18
+ 1e8:	29 23       	and	r18, r25
+ 1ea:	28 bb       	out	0x18, r18	; 24
+ 1ec:	93 e0       	ldi	r25, 0x03	; 3
+ 1ee:	9a 95       	dec	r25
+ 1f0:	f1 f7       	brne	.-4      	; 0x1ee <_ZN3SPI8transferEh+0x114>
+ 1f2:	00 00       	nop
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK); /* a slave latches input data bit */
+ 1f4:	98 b3       	in	r25, 0x18	; 24
+ 1f6:	9b 01       	movw	r18, r22
+ 1f8:	02 80       	ldd	r0, Z+2	; 0x02
+ 1fa:	02 c0       	rjmp	.+4      	; 0x200 <_ZN3SPI8transferEh+0x126>
+ 1fc:	22 0f       	add	r18, r18
+ 1fe:	33 1f       	adc	r19, r19
+ 200:	0a 94       	dec	r0
+ 202:	e2 f7       	brpl	.-8      	; 0x1fc <_ZN3SPI8transferEh+0x122>
+ 204:	29 27       	eor	r18, r25
+ 206:	28 bb       	out	0x18, r18	; 24
+ 208:	41 50       	subi	r20, 0x01	; 1
+ 20a:	50 40       	sbci	r21, 0x00	; 0
+		PORTB ^= (1<<pinSCK); /* a slave latches input data bit */
+	}
+}
+else
+{
+	for(int i=0;i<8;i++)
+ 20c:	09 f0       	breq	.+2      	; 0x210 <_ZN3SPI8transferEh+0x136>
+ 20e:	be cf       	rjmp	.-132    	; 0x18c <_ZN3SPI8transferEh+0xb2>
+		_delay_us(10);
+		PORTB ^= (1<<pinSCK); /* a slave latches input data bit */
+	}
+}
+return _byte;
+}
+ 210:	08 95       	ret
+
+00000212 <main>:
+	void config(uint8_t miso,uint8_t mosi,uint8_t SCK,uint8_t mode=0);
+	uint8_t transfer(uint8_t data);
+};
+
+int main(void)
+{
+ 212:	cf 93       	push	r28
+ 214:	df 93       	push	r29
+ 216:	00 d0       	rcall	.+0      	; 0x218 <main+0x6>
+ 218:	00 d0       	rcall	.+0      	; 0x21a <main+0x8>
+ 21a:	cd b7       	in	r28, 0x3d	; 61
+ 21c:	de b7       	in	r29, 0x3e	; 62
+	SPI device;
+	device.config(0,1,2);
+ 21e:	ce 01       	movw	r24, r28
+ 220:	01 96       	adiw	r24, 0x01	; 1
+ 222:	60 e0       	ldi	r22, 0x00	; 0
+ 224:	41 e0       	ldi	r20, 0x01	; 1
+ 226:	22 e0       	ldi	r18, 0x02	; 2
+ 228:	00 e0       	ldi	r16, 0x00	; 0
+ 22a:	15 df       	rcall	.-470    	; 0x56 <_ZN3SPI6configEhhhh>
+	DDRB |= 1<<4;
+ 22c:	bc 9a       	sbi	0x17, 4	; 23
+	uint8_t aux=0;
+ 22e:	10 e0       	ldi	r17, 0x00	; 0
+    while(1)
+    {
+		PORTB &= ~(1<<pinCS);
+ 230:	c4 98       	cbi	0x18, 4	; 24
+		device.transfer(aux);
+ 232:	ce 01       	movw	r24, r28
+ 234:	01 96       	adiw	r24, 0x01	; 1
+ 236:	61 2f       	mov	r22, r17
+ 238:	50 df       	rcall	.-352    	; 0xda <_ZN3SPI8transferEh>
+		PORTB |= (1<<pinCS);	
+ 23a:	c4 9a       	sbi	0x18, 4	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 23c:	8f e3       	ldi	r24, 0x3F	; 63
+ 23e:	9d e0       	ldi	r25, 0x0D	; 13
+ 240:	a3 e0       	ldi	r26, 0x03	; 3
+ 242:	81 50       	subi	r24, 0x01	; 1
+ 244:	90 40       	sbci	r25, 0x00	; 0
+ 246:	a0 40       	sbci	r26, 0x00	; 0
+ 248:	e1 f7       	brne	.-8      	; 0x242 <main+0x30>
+ 24a:	00 c0       	rjmp	.+0      	; 0x24c <main+0x3a>
+ 24c:	00 00       	nop
+		
 		_delay_ms(1000);
-		PORTB ^= 1<<4;
- 1c4:	88 b3       	in	r24, 0x18	; 24
- 1c6:	81 27       	eor	r24, r17
- 1c8:	88 bb       	out	0x18, r24	; 24
- 1ca:	ef cf       	rjmp	.-34     	; 0x1aa <main+0x1e>
+		aux++;
+ 24e:	1f 5f       	subi	r17, 0xFF	; 255
+ 250:	ef cf       	rjmp	.-34     	; 0x230 <main+0x1e>
 
-000001cc <_exit>:
- 1cc:	f8 94       	cli
+00000252 <_exit>:
+ 252:	f8 94       	cli
 
-000001ce <__stop_program>:
- 1ce:	ff cf       	rjmp	.-2      	; 0x1ce <__stop_program>
+00000254 <__stop_program>:
+ 254:	ff cf       	rjmp	.-2      	; 0x254 <__stop_program>
